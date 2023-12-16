@@ -12,4 +12,7 @@ public class PlayerMovementData : ScriptableObject
     
     [SerializeField, FoldoutGroup("SwerveMechanic")] private float Sensitivity;
     public float sensitivity => Sensitivity;
+
+    [SerializeField, FoldoutGroup("JoystickMechanic")] private float MovementSpeed;
+    public float movementSpeed => MovementSpeed;
 }

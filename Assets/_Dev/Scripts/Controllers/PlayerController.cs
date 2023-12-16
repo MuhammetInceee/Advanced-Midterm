@@ -1,9 +1,13 @@
 using System;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
-    private GameController _gameController;
+    public event Action OnPlay;
+    public Action OnCityEnter;
+    
+    [SerializeField] private FloatingJoystick joystick;
+    
     private Rigidbody _rb;
     private PlayerMovementData _movementData;
 
@@ -17,6 +21,13 @@ public class PlayerController : MonoBehaviour
         InitValues();
         InitSubscribeEvents();
     }
+
+    private void Update()
+    {
+        OnPlay?.Invoke();
+    }
+
+    #region PlayerMovement
 
     private void SwerveVerticalMovement()
     {
@@ -32,9 +43,40 @@ public class PlayerController : MonoBehaviour
         else _horizontalSpeed = 0;
     }
 
+    private void JoyStickMovement()
+    {
+        if (joystick.Direction.magnitude > 0.05f)
+        {
+            var speed = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+            
+
+            _rb.velocity = new Vector3(joystick.Horizontal * _movementData.movementSpeed, _rb.velocity.y,
+                joystick.Vertical * _movementData.movementSpeed);
+
+            if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+            {
+                transform.rotation = Quaternion.LookRotation(_rb.velocity);
+            }
+            
+        }
+    }
+    
+    #endregion
+
+    #region PlayerCollision
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out IInteractable interactable))
+        {
+            interactable.Execute(this);
+        }
+    }
+
+    #endregion
+
     private void InitVariables()
     {
-        _gameController = GameController.Instance;
         _rb = GetComponent<Rigidbody>();
         _movementData = Resources.Load<PlayerMovementData>("Data/Player/PlayerMovementData");
     }
@@ -47,9 +89,8 @@ public class PlayerController : MonoBehaviour
     
     private void InitSubscribeEvents()
     {
-        _gameController.PlayerInput += SwerveHorizontalMovement;
-        _gameController.PlayerInput += SwerveVerticalMovement;
+        OnPlay += JoyStickMovement;
     }
-    
+
     //TODO Player'ı durdurduğun zaman velocity sıfırla
 }
