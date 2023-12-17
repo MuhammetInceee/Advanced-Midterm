@@ -10,9 +10,10 @@ public class PlayerController : Singleton<PlayerController>
     
     public List<GameObject> stackList = new();
     public List<Transform> holdersTr;
+    public GameObject rope;
 
     internal Material material;
-    internal bool isInRightLine;
+    internal bool isInRightLine = true;
     
     [SerializeField] private FloatingJoystick joystick;
     
@@ -51,7 +52,13 @@ public class PlayerController : Singleton<PlayerController>
         else _tempHorizontalSpeed = 0;
     }
 
-    private void JoyStickMovement()
+    internal void SwerveInput()
+    {
+        SwerveVerticalMovement();
+        SwerveHorizontalMovement();
+    }
+
+    internal void JoyStickMovement()
     {
         if (joystick.Direction.magnitude > 0.05f)
         {
@@ -83,6 +90,13 @@ public class PlayerController : Singleton<PlayerController>
 
     #endregion
 
+    private void CityEnter()
+    {
+        _rb.velocity = Vector3.zero;
+        OnPlay -= SwerveInput;
+        OnPlay += JoyStickMovement;
+    }
+
     private void GetReference()
     {
         _rb = GetComponent<Rigidbody>();
@@ -99,9 +113,7 @@ public class PlayerController : Singleton<PlayerController>
     
     private void InitSubscribeEvents()
     {
-        OnPlay += SwerveVerticalMovement;
-        OnPlay += SwerveHorizontalMovement;
+        OnPlay += SwerveInput;
+        OnCityEnter += CityEnter;
     }
-
-    //TODO Player'ı durdurduğun zaman velocity sıfırla
 }
