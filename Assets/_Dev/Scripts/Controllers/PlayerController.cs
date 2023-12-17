@@ -88,6 +88,14 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out IInteractable interactable))
+        {
+            interactable.ExecuteExit(this);
+        }
+    }
+
     #endregion
 
     private void CityEnter()

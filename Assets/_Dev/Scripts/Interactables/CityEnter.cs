@@ -38,5 +38,6 @@ public class CityEnter : MonoBehaviour, IInteractable
         }
         
         playerController.rope.SetActive(false);
+        playerController.stackList.Remove(playerController.gameObject);
     }
 }
