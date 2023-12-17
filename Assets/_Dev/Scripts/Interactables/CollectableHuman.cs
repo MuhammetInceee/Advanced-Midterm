@@ -5,6 +5,7 @@ public class CollectableHuman : MonoBehaviour, IInteractable
 {
     private Material _material;
     private Collider _collider;
+    private UIController _controllerUI;
 
     private void Awake()
     {
@@ -34,8 +35,7 @@ public class CollectableHuman : MonoBehaviour, IInteractable
         
             if (list.Count == 0)
             {
-                print($"Game Over");
-                //TODO Game Over Action will Invoked
+                _controllerUI.OnLevelFail?.Invoke();
             }
         }
     }
@@ -54,7 +54,6 @@ public class CollectableHuman : MonoBehaviour, IInteractable
     {
         _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
         _collider = GetComponent<Collider>();
+        _controllerUI = UIController.Instance;
     }
-
-
 }

@@ -19,6 +19,7 @@ public class PlayerController : Singleton<PlayerController>
     
     private Rigidbody _rb;
     private PlayerMovementData _movementData;
+    private UIController _controllerUI;
 
     [Header("TempData")] 
     internal float tempVerticalSpeed;
@@ -64,7 +65,6 @@ public class PlayerController : Singleton<PlayerController>
         {
             var speed = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
             
-
             _rb.velocity = new Vector3(joystick.Horizontal * _movementData.movementSpeed, _rb.velocity.y,
                 joystick.Vertical * _movementData.movementSpeed);
 
@@ -72,7 +72,6 @@ public class PlayerController : Singleton<PlayerController>
             {
                 transform.rotation = Quaternion.LookRotation(_rb.velocity);
             }
-            
         }
     }
     
@@ -110,6 +109,7 @@ public class PlayerController : Singleton<PlayerController>
         _rb = GetComponent<Rigidbody>();
         _movementData = Resources.Load<PlayerMovementData>("Data/Player/PlayerMovementData");
         material = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        _controllerUI = UIController.Instance;
     }
     
     private void InitValues()
@@ -121,7 +121,17 @@ public class PlayerController : Singleton<PlayerController>
     
     private void InitSubscribeEvents()
     {
-        OnPlay += SwerveInput;
         OnCityEnter += CityEnter;
+        _controllerUI.OnLevelFail += DeinitializeInput;
+    }
+
+    public void InitInput()
+    {
+        OnPlay += SwerveInput;
+    }
+
+    private void DeinitializeInput()
+    {
+        OnPlay -= SwerveInput;
     }
 }

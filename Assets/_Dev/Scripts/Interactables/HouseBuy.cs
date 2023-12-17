@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
@@ -9,6 +8,8 @@ public class HouseBuy : MonoBehaviour, IInteractable
     private bool _buying;
     private bool _isFilled;
     private int _currentCount;
+    private UIController _controllerUI;
+    [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private int requireCount;
     [SerializeField] private TextMeshProUGUI text;
 
@@ -24,7 +25,12 @@ public class HouseBuy : MonoBehaviour, IInteractable
 
             if (_currentCount >= requireCount)
             {
-                print("Congs");
+                
+                meshRenderer.material.DOColor(Color.white, 1f)
+                    .OnComplete(() =>
+                    {
+                        _controllerUI.OnLevelSuccess?.Invoke();
+                    });
                 _isFilled = true;
             }
         }
@@ -32,10 +38,9 @@ public class HouseBuy : MonoBehaviour, IInteractable
 
     private void Awake()
     {
+        GetReferences();
         InitVariables();
     }
-
-
 
     public void Execute(PlayerController playerController)
     {
@@ -68,6 +73,11 @@ public class HouseBuy : MonoBehaviour, IInteractable
                 });
             yield return new WaitForSeconds(0.7f);
         }
+    }
+    
+    private void GetReferences()
+    {
+        _controllerUI = UIController.Instance;
     }
     
     private void InitVariables()
