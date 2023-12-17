@@ -25,7 +25,7 @@ public class PlayerController : Singleton<PlayerController>
     
     private void Awake()
     {
-        InitVariables();
+        GetReference();
         InitValues();
         InitSubscribeEvents();
     }
@@ -83,7 +83,7 @@ public class PlayerController : Singleton<PlayerController>
 
     #endregion
 
-    private void InitVariables()
+    private void GetReference()
     {
         _rb = GetComponent<Rigidbody>();
         _movementData = Resources.Load<PlayerMovementData>("Data/Player/PlayerMovementData");

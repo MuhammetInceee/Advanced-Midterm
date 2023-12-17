@@ -8,7 +8,7 @@ public class CollectableHuman : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        InitVariables();
+        GetReference();
     }
     
     public void Execute(PlayerController playerController)
@@ -50,10 +50,9 @@ public class CollectableHuman : MonoBehaviour, IInteractable
         return playerController.holdersTr[^1].transform;
     }
     
-    private void InitVariables()
+    private void GetReference()
     {
         _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
-        _material.color = Color.green;
         _collider = GetComponent<Collider>();
     }
 

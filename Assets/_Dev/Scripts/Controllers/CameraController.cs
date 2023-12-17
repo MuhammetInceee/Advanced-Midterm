@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        InitVariables();
+        GetReference();
         InitSubscribeEvents();
     }
 
@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
         _playerController.OnCityEnter += ChangeCamera;
     }
 
-    private void InitVariables()
+    private void GetReference()
     {
         _playerController = PlayerController.Instance;
     }
