@@ -9,6 +9,7 @@ public class PlayerController : Singleton<PlayerController>
     public Action OnCityEnter;
     
     public List<GameObject> stackList = new();
+    public List<Transform> holdersTr;
 
     internal string materialName;
     
@@ -92,7 +93,6 @@ public class PlayerController : Singleton<PlayerController>
     {
         _horizontalSpeed = _movementData.horizontalSpeed;
         _verticalSpeed = _movementData.verticalSpeed;
-        stackList.Add(gameObject);
     }
     
     private void InitSubscribeEvents()
