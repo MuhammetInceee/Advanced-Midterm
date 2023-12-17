@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
+    private static readonly int Run = Animator.StringToHash("Run");
+    
     public event Action OnPlay;
     public Action OnCityEnter;
     
@@ -20,11 +22,12 @@ public class PlayerController : Singleton<PlayerController>
     private Rigidbody _rb;
     private PlayerMovementData _movementData;
     private UIController _controllerUI;
+    private Animator _animator;
 
     [Header("TempData")] 
     internal float tempVerticalSpeed;
     private float _tempHorizontalSpeed;
-    
+
     private void Awake()
     {
         GetReference();
@@ -63,8 +66,6 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (joystick.Direction.magnitude > 0.05f)
         {
-            var speed = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
-            
             _rb.velocity = new Vector3(joystick.Horizontal * _movementData.movementSpeed, _rb.velocity.y,
                 joystick.Vertical * _movementData.movementSpeed);
 
@@ -102,6 +103,7 @@ public class PlayerController : Singleton<PlayerController>
         _rb.velocity = Vector3.zero;
         OnPlay -= SwerveInput;
         OnPlay += JoyStickMovement;
+        ListAnimationControl(Run, false);
     }
 
     private void GetReference()
@@ -110,6 +112,7 @@ public class PlayerController : Singleton<PlayerController>
         _movementData = Resources.Load<PlayerMovementData>("Data/Player/PlayerMovementData");
         material = GetComponentInChildren<SkinnedMeshRenderer>().material;
         _controllerUI = UIController.Instance;
+        _animator = GetComponent<Animator>();
     }
     
     private void InitValues()
@@ -128,10 +131,19 @@ public class PlayerController : Singleton<PlayerController>
     public void InitInput()
     {
         OnPlay += SwerveInput;
+        _animator.SetBool(Run, true);
     }
 
     private void DeinitializeInput()
     {
         OnPlay -= SwerveInput;
+    }
+
+    internal void ListAnimationControl(int animHash, bool value)
+    {
+        foreach (GameObject obj in stackList)
+        {
+            obj.GetComponent<Animator>().SetBool(animHash, value);
+        }
     }
 }

@@ -633,6 +633,12 @@ Transform:
   - {fileID: 32277166}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &244482500 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1708152594164073093, guid: 4858de9da7e9b6944a319e79fa0969c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5711101628335349524}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &339432997
 Transform:
   m_ObjectHideFlags: 0
@@ -2726,7 +2732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1946275075
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3250,7 +3256,7 @@ PrefabInstance:
     - target: {fileID: 6750637066566862577, guid: 5510f8ccb0eae4041bf4db4c9d492152,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3290,12 +3296,33 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 5711101628335349524}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 244482500}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a4d247c1b268254fa4fe26b6b7f6411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &543450651803310110
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244482500}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 1cf7fc77fdae77340886f4e6f57fa426, type: 3}
+  m_Controller: {fileID: 9100000, guid: 6f3d1bb4579aa594f8c6b9cc42615c35, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1334702277590547811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3798,7 +3825,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1708152594164073093, guid: 4858de9da7e9b6944a319e79fa0969c7,
+        type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 543450651803310110}
   m_SourcePrefab: {fileID: 100100000, guid: 4858de9da7e9b6944a319e79fa0969c7, type: 3}
 --- !u!224 &5727819786352954410
 RectTransform:
@@ -4376,6 +4407,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CityEnter
+      objectReference: {fileID: 0}
+    - target: {fileID: 1122720807153153870, guid: 477f1a47828782248a7c58f54b63c919,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5432779468586719355, guid: 477f1a47828782248a7c58f54b63c919,
         type: 3}

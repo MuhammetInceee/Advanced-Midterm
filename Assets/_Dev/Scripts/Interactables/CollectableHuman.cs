@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class CollectableHuman : MonoBehaviour, IInteractable
 {
+    private static readonly int Run = Animator.StringToHash("Run");
+    
     private Material _material;
     private Collider _collider;
     private UIController _controllerUI;
+    private Animator _animator;
 
     private void Awake()
     {
@@ -24,6 +27,7 @@ public class CollectableHuman : MonoBehaviour, IInteractable
             transform.parent = targetHolder;
             transform.localPosition = new Vector3(0, -0.645f,0);
             _collider.enabled = false;
+            _animator.SetBool(Run, true);
         }
         else
         {
@@ -43,11 +47,8 @@ public class CollectableHuman : MonoBehaviour, IInteractable
     private Transform TargetHolderTransform(PlayerController playerController)
     {
         Transform target = playerController.holdersTr.FirstOrDefault(m => m.transform.childCount == 1);
-        if (target != null)
-        {
-            return target!.transform;
-        }
-        return playerController.holdersTr[^1].transform;
+        
+        return target != null ? target!.transform : playerController.holdersTr[^1].transform;
     }
     
     private void GetReference()
@@ -55,5 +56,6 @@ public class CollectableHuman : MonoBehaviour, IInteractable
         _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
         _collider = GetComponent<Collider>();
         _controllerUI = UIController.Instance;
+        _animator = GetComponent<Animator>();
     }
 }
