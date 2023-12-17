@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CollectableHuman : MonoBehaviour, IInteractable
 {
-    private string _materialName;
+    private Material _material;
     private Collider _collider;
 
     private void Awake()
@@ -15,30 +15,29 @@ public class CollectableHuman : MonoBehaviour, IInteractable
     {
         var list = playerController.stackList;
         
-        // if (playerController.materialName == _materialName)
-        // {
-            //Collect
-            list.Add(gameObject);
+        if (playerController.material.color == _material.color)
+        {
             Transform targetHolder = TargetHolderTransform(playerController);
+            
+            list.Add(gameObject);
             transform.parent = targetHolder;
             transform.localPosition = new Vector3(0, -0.645f,0);
             _collider.enabled = false;
-        // }
-        // else
-        // {
-        //     //Destroy Last Element
-        //     GameObject targetObj = list[^1];
-        //
-        //     list.Remove(targetObj);
-        //     Destroy(targetObj);
-        //     Destroy(gameObject);
-        //
-        //     if (list.Count == 0)
-        //     {
-        //         print($"Game Over");
-        //         //TODO Game Over Action will Invoked
-        //     }
-        // }
+        }
+        else
+        {
+            GameObject targetObj = list[^1];
+        
+            list.Remove(targetObj);
+            Destroy(targetObj);
+            Destroy(gameObject);
+        
+            if (list.Count == 0)
+            {
+                print($"Game Over");
+                //TODO Game Over Action will Invoked
+            }
+        }
     }
     
     private Transform TargetHolderTransform(PlayerController playerController)
@@ -53,7 +52,8 @@ public class CollectableHuman : MonoBehaviour, IInteractable
     
     private void InitVariables()
     {
-        // _materialName = GetComponent<MeshRenderer>().material.name;
+        _material = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        _material.color = Color.green;
         _collider = GetComponent<Collider>();
     }
 

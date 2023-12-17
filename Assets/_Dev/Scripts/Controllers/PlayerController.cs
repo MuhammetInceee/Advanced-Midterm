@@ -11,7 +11,8 @@ public class PlayerController : Singleton<PlayerController>
     public List<GameObject> stackList = new();
     public List<Transform> holdersTr;
 
-    internal string materialName;
+    internal Material material;
+    internal bool isInRightLine;
     
     [SerializeField] private FloatingJoystick joystick;
     
@@ -19,8 +20,8 @@ public class PlayerController : Singleton<PlayerController>
     private PlayerMovementData _movementData;
 
     [Header("TempData")] 
-    private float _verticalSpeed;
-    private float _horizontalSpeed;
+    internal float tempVerticalSpeed;
+    private float _tempHorizontalSpeed;
     
     private void Awake()
     {
@@ -38,16 +39,16 @@ public class PlayerController : Singleton<PlayerController>
 
     private void SwerveVerticalMovement()
     {
-        _rb.velocity = new Vector3(Mathf.Clamp(_horizontalSpeed, -10, 10), _rb.velocity.y,
-            _verticalSpeed);
+        _rb.velocity = new Vector3(Mathf.Clamp(_tempHorizontalSpeed, -10, 10), _rb.velocity.y,
+            tempVerticalSpeed);
     }
 
     private void SwerveHorizontalMovement()
     {
         if (Input.GetMouseButton(0))
-            _horizontalSpeed = Input.GetAxis("Mouse X") * _movementData.sensitivity;
+            _tempHorizontalSpeed = Input.GetAxis("Mouse X") * _movementData.sensitivity;
 
-        else _horizontalSpeed = 0;
+        else _tempHorizontalSpeed = 0;
     }
 
     private void JoyStickMovement()
@@ -86,13 +87,14 @@ public class PlayerController : Singleton<PlayerController>
     {
         _rb = GetComponent<Rigidbody>();
         _movementData = Resources.Load<PlayerMovementData>("Data/Player/PlayerMovementData");
-        // materialName = GetComponent<MeshRenderer>().material.name;
+        material = GetComponentInChildren<SkinnedMeshRenderer>().material;
     }
     
     private void InitValues()
     {
-        _horizontalSpeed = _movementData.horizontalSpeed;
-        _verticalSpeed = _movementData.verticalSpeed;
+        _tempHorizontalSpeed = _movementData.horizontalSpeed;
+        tempVerticalSpeed = _movementData.verticalSpeed;
+        stackList.Add(gameObject);
     }
     
     private void InitSubscribeEvents()
