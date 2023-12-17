@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0f76f5db328af41ace1203ae1ad99c, type: 3}
   m_Name: BulletPooling
   m_EditorClassIdentifier: 
-  prefabs: []
-  poolSize: 0
+  prefabs:
+  - {fileID: 7317545385169629918, guid: 91203d51e22b4da47a5ce02997fc5fae, type: 3}
+  poolSize: 10
   isRandomize: 0

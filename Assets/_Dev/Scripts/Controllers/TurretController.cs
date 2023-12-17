@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour
 {
+    private static readonly int Shoot = Animator.StringToHash("Shoot");
+    
+    private readonly float _fireRate = 1.5f;
+    
     private PlayerController _playerController;
     private ObjectPoolingSO _bulletPooling;
-    private readonly float _fireRate = 1f;
+    private Animator _animator;
     private float _lastShootTime;
 
     [SerializeField] private Transform shootPoint;
@@ -18,15 +22,18 @@ public class TurretController : MonoBehaviour
     
     internal void Fire()
     {
-        if (Time.time > _lastShootTime + _fireRate)
+        transform.LookAt(_playerController.transform);
+        if (Time.time > _lastShootTime + _fireRate && !_playerController.isInRightLine)
         {
             _lastShootTime = Time.time;
 
+            _animator.SetTrigger(Shoot);
             GameObject bullet = _bulletPooling.GetPooledObject();
             bullet.SetActive(true);
             bullet.transform.position = shootPoint.position;
-            bullet.transform.DOMove(_playerController.transform.position, 0.5f)
-                .SetEase(Ease.InQuint)
+            bullet.transform.parent = _playerController.stackList[0].transform;
+            bullet.transform.DOLocalMove(Vector3.up, 1f)
+                .SetEase(Ease.InSine)
                 .OnComplete(() =>
                 {
                     var list = _playerController.stackList;
@@ -43,6 +50,7 @@ public class TurretController : MonoBehaviour
     {
         _playerController = PlayerController.Instance;
         _bulletPooling = Resources.Load<ObjectPoolingSO>("Data/Pooling/BulletPooling");
+        _animator = GetComponent<Animator>();
     }
     
     private void InitValues()

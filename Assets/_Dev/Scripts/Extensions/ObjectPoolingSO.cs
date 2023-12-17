@@ -106,6 +106,7 @@ using Random = UnityEngine.Random;
 
         public void ReturnToPool(GameObject obj)
         {
+            obj.transform.parent = _parentObj.transform;
             obj.SetActive(false);
         }
 
