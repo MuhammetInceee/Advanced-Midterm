@@ -1,11 +1,10 @@
-using System;
 using Cinemachine;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera swerveCamera;
-    [SerializeField] private CinemachineVirtualCamera joystickCamera;
+    [SerializeField] private GameObject swerveCamera;
+    [SerializeField] private GameObject joystickCamera;
 
     private PlayerController _playerController;
 
@@ -17,8 +16,8 @@ public class CameraController : MonoBehaviour
 
     private void ChangeCamera()
     {
-        swerveCamera.enabled = false;
-        joystickCamera.enabled = true;
+        swerveCamera.SetActive(false);
+        joystickCamera.SetActive(true);
     }
 
     private void InitSubscribeEvents()

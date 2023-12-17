@@ -15,4 +15,4 @@ MonoBehaviour:
   VerticalSpeed: 10
   HorizontalSpeed: 0
   Sensitivity: 11
-  MovementSpeed: 2
+  MovementSpeed: 5
