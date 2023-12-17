@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : Singleton<PlayerController>
 {
     private static readonly int Run = Animator.StringToHash("Run");
+    private static readonly int Speed = Animator.StringToHash("Speed");
     
     public event Action OnPlay;
     public Action OnCityEnter;
@@ -66,6 +67,9 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (joystick.Direction.magnitude > 0.05f)
         {
+            var speed = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+            _animator.SetFloat(Speed, speed.magnitude);
+            
             _rb.velocity = new Vector3(joystick.Horizontal * _movementData.movementSpeed, _rb.velocity.y,
                 joystick.Vertical * _movementData.movementSpeed);
 
