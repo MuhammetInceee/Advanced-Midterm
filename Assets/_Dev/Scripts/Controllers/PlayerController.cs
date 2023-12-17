@@ -1,10 +1,16 @@
 using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
     public event Action OnPlay;
     public Action OnCityEnter;
+    
+    public List<GameObject> stackList = new();
+
+    internal string materialName;
     
     [SerializeField] private FloatingJoystick joystick;
     
@@ -79,17 +85,20 @@ public class PlayerController : Singleton<PlayerController>
     {
         _rb = GetComponent<Rigidbody>();
         _movementData = Resources.Load<PlayerMovementData>("Data/Player/PlayerMovementData");
+        // materialName = GetComponent<MeshRenderer>().material.name;
     }
     
     private void InitValues()
     {
         _horizontalSpeed = _movementData.horizontalSpeed;
         _verticalSpeed = _movementData.verticalSpeed;
+        stackList.Add(gameObject);
     }
     
     private void InitSubscribeEvents()
     {
-        OnPlay += JoyStickMovement;
+        OnPlay += SwerveVerticalMovement;
+        OnPlay += SwerveHorizontalMovement;
     }
 
     //TODO Player'ı durdurduğun zaman velocity sıfırla
