@@ -36,6 +36,7 @@ public class TurretController : MonoBehaviour
                 .SetEase(Ease.InSine)
                 .OnComplete(() =>
                 {
+                    _playerController.Score--;
                     var list = _playerController.stackList;
                     GameObject lastHuman = list[^1];
                     list.Remove(lastHuman);

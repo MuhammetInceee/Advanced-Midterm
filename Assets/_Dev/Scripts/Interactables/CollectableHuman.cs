@@ -28,6 +28,7 @@ public class CollectableHuman : MonoBehaviour, IInteractable
             transform.localPosition = new Vector3(0, -0.645f,0);
             _collider.enabled = false;
             _animator.SetBool(Run, true);
+            playerController.Score++;
         }
         else
         {
@@ -36,6 +37,7 @@ public class CollectableHuman : MonoBehaviour, IInteractable
             list.Remove(targetObj);
             Destroy(targetObj);
             Destroy(gameObject);
+            playerController.Score--;
         
             if (list.Count == 0)
             {

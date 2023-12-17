@@ -66,6 +66,7 @@ public class HouseBuy : MonoBehaviour, IInteractable
             targetObj.transform.DOJump(transform.position, 1, 1, 0.5f)
                 .OnComplete(() =>
                 {
+                    playerController.Score--;
                     playerController.transform.localScale -= Vector3.one * 0.2f;
                     list.Remove(targetObj);
                     Destroy(targetObj);

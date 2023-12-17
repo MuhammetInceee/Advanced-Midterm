@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
@@ -19,11 +20,25 @@ public class PlayerController : Singleton<PlayerController>
     internal bool isInRightLine = true;
     
     [SerializeField] private FloatingJoystick joystick;
-    
+    [SerializeField] private TextMeshProUGUI scoreText;
+
+    private int _score;
     private Rigidbody _rb;
     private PlayerMovementData _movementData;
     private UIController _controllerUI;
     private Animator _animator;
+
+    private string TextContent => $"Score : {_score}";
+
+    internal int Score
+    {
+        get => _score;
+        set
+        {
+            _score = value;
+            scoreText.text = TextContent;
+        }
+    }
 
     [Header("TempData")] 
     internal float tempVerticalSpeed;
@@ -124,6 +139,7 @@ public class PlayerController : Singleton<PlayerController>
         _tempHorizontalSpeed = _movementData.horizontalSpeed;
         tempVerticalSpeed = _movementData.verticalSpeed;
         stackList.Add(gameObject);
+        scoreText.text = TextContent;
     }
     
     private void InitSubscribeEvents()

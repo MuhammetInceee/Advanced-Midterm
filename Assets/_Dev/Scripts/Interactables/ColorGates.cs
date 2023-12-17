@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -6,6 +7,13 @@ public class ColorGates : MonoBehaviour, IInteractable
 {
     [SerializeField, EnumToggleButtons] GateColorTypes Type;
     private GateColorType type => new (Type);
+    private MeshRenderer _meshRenderer;
+
+    private void Awake()
+    {
+        GetReference();
+        InitVariables();
+    }
 
     public void Execute(PlayerController playerController)
     {
@@ -13,6 +21,17 @@ public class ColorGates : MonoBehaviour, IInteractable
         {
             obj.GetComponentInChildren<SkinnedMeshRenderer>().material.color = type.GateColor;
         }
+    }
+    
+    private void GetReference()
+    {
+        _meshRenderer = GetComponent<MeshRenderer>();
+    }
+    
+    private void InitVariables()
+    {
+        _meshRenderer.material.color = type.GateColor;
+        _meshRenderer.material.DOFade(10, 0);
     }
 }
 
