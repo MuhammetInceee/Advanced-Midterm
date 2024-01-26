@@ -44,7 +44,7 @@ public class PlayerController : Singleton<PlayerController>
     internal float tempVerticalSpeed;
     private float _tempHorizontalSpeed;
 
-    private void Awake()
+    public void Initialize()
     {
         GetReference();
         InitValues();

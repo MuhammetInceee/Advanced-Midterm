@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour
+public class TurretController : Singleton<TurretController>
 {
     private static readonly int Shoot = Animator.StringToHash("Shoot");
     
@@ -14,7 +14,7 @@ public class TurretController : MonoBehaviour
 
     [SerializeField] private Transform shootPoint;
 
-    private void Awake()
+    public void Initialize()
     {
         GetReference();
         InitValues();

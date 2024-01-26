@@ -17,7 +17,7 @@ public class UIController : Singleton<UIController>
     [FoldoutGroup("Screens"), SerializeField] private GameObject gameScreen;
     [FoldoutGroup("Screens"), SerializeField] private GameObject failScreen;
 
-    private void Awake()
+    public void Initialize()
     {
         GetReferences();
         InitSubscribeEvent();

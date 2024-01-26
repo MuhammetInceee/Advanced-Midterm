@@ -1,14 +1,14 @@
 using Cinemachine;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : Singleton<CameraController>
 {
     [SerializeField] private GameObject swerveCamera;
     [SerializeField] private GameObject joystickCamera;
 
     private PlayerController _playerController;
 
-    private void Awake()
+    public void Initialize()
     {
         GetReference();
         InitSubscribeEvents();
